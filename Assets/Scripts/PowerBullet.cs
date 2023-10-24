@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class PowerBullet : MonoBehaviour
 {
-    private float speed = 10f;
+    private float speed = 8f;
     public Rigidbody2D rb;
 
     void Start()
@@ -18,5 +18,4 @@ public class Bullet : MonoBehaviour
         Debug.Log(hitInfo.name);
         Destroy(gameObject);
     }
-
 }
