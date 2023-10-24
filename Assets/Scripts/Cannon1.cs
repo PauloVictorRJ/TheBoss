@@ -5,12 +5,14 @@ using UnityEngine;
 public class Cannon1 : MonoBehaviour
 {
     public Transform firePoint1;
-    public Transform firePoint3;
     public GameObject bulletPrefab;
+    public AudioSource audioSource;
+    public AudioClip shootingAudioClip;
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1")){
+        if (Input.GetButtonDown("Fire1"))
+        {
             Shoot();
         }
     }
@@ -18,6 +20,6 @@ public class Cannon1 : MonoBehaviour
     void Shoot()
     {
         Instantiate(bulletPrefab, firePoint1.position, firePoint1.rotation);
-        Instantiate(bulletPrefab, firePoint3.position, firePoint3.rotation);
+        audioSource.PlayOneShot(shootingAudioClip);
     }
 }
