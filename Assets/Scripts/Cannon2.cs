@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cannon2 : MonoBehaviour
@@ -9,18 +8,25 @@ public class Cannon2 : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip shootingAudioClip;
 
+    private bool canShoot = true;
+
     void Update()
     {
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") && canShoot)
         {
-            Shoot();
+            StartCoroutine(ShootWithCooldown());
         }
     }
 
-    void Shoot()
+    IEnumerator ShootWithCooldown()
     {
+        canShoot = false;
+
         Instantiate(powerBulletPrefab, firePoint2.position, firePoint2.rotation);
         audioSource.PlayOneShot(shootingAudioClip);
+
+        yield return new WaitForSeconds(3f);
+
+        canShoot = true;
     }
 }
-

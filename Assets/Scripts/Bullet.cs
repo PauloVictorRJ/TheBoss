@@ -1,22 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 10f;
+    private float speed = 20f;
     public Rigidbody2D rb;
+    public GameObject HitSplashPrefab;
 
     void Start()
     {
         transform.rotation = Quaternion.Euler(0, 0, 90);
         rb.velocity = transform.right * speed;
+        gameObject.name = "Bullet";
     }
 
-    void OnTriggerEnter2D(Collider2D hitInfo)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(hitInfo.name);
         Destroy(gameObject);
+        HitSplash explosion = collision.gameObject.GetComponent<HitSplash>();
+        Instantiate(HitSplashPrefab, transform.position, Quaternion.identity);
     }
-
 }

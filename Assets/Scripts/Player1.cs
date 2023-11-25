@@ -3,11 +3,14 @@ using UnityEngine;
 public class Player1 : MonoBehaviour
 {
     private Animator anim;
-    private float speed = 5f;
+    private float speed = 8f;
+    public AudioSource audioSource;
+    public AudioClip DeathAudioClip;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        gameObject.name = "Player 1";
     }
 
     void Update()
@@ -22,27 +25,22 @@ public class Player1 : MonoBehaviour
 
         if (horizontalInput < 0f && horizontalInput > -1f)
         {
-            // Intervalo entre -1 e 0
             SetAnimationState(1);
         }
         else if (horizontalInput == -1f)
         {
-            // Exatamente -1
             SetAnimationState(2);
         }
         else if (horizontalInput > 0f && horizontalInput < 1f)
         {
-            // Intervalo entre 0 e 1
             SetAnimationState(3);
         }
         else if (horizontalInput == 1f)
         {
-            // Exatamente 1
             SetAnimationState(4);
         }
         else if (horizontalInput == 0f)
         {
-            // Exatamente 0
             SetAnimationState(0);
         }
 
@@ -58,5 +56,20 @@ public class Player1 : MonoBehaviour
     void SetAnimationState(int state)
     {
         anim.SetInteger("p1State", state);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Enemy")
+        {
+            anim.SetInteger("p1State", 5);
+            audioSource.PlayOneShot(DeathAudioClip);
+        }
+
+        if (collision.gameObject.name == "EnemyBullet")
+        {
+            anim.SetInteger("p1State", 5);
+            audioSource.PlayOneShot(DeathAudioClip);
+        }
     }
 }
